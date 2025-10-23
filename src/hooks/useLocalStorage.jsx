@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 // Save and load data from sessionStorage instead of localStorage
-export function useLocalStorage(key, initialValue) { // Renaming this hook is optional but recommended
+ function useLocalStorage(key, initialValue) { // Renaming this hook is optional but recommended
   // Get initial value from sessionStorage or use the provided initialValue
   const [value, setValue] = useState(() => {
     try {
@@ -39,3 +39,5 @@ export function useLocalStorage(key, initialValue) { // Renaming this hook is op
   // Return the value, the standard setter, AND the new clear function
   return [value, setValue, clearStorage];
 }
+
+export default useLocalStorage
