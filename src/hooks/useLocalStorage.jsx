@@ -12,7 +12,7 @@ export function useLocalStorage(key, initialValue) { // Renaming this hook is op
         console.error("Error reading sessionStorage key “" + key + "”: ", error);
         return initialValue;
     }
-  });
+  })
   // Effect to sync state changes to sessionStorage
   useEffect(() => {
     try {
@@ -35,7 +35,7 @@ export function useLocalStorage(key, initialValue) { // Renaming this hook is op
         // Updated log message for clarity
         console.error("Error clearing sessionStorage key “" + key + "”: ", error);
     }
-  };
+  }
   // Return the value, the standard setter, AND the new clear function
   return [value, setValue, clearStorage];
 }
