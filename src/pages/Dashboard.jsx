@@ -24,7 +24,7 @@ const timer = setTimeout(() => {
 setSuccessMessage(null);
 // Clear state from the URL history to prevent re-showing on refresh/back/forward
  window.history.replaceState({}, document.title, window.location.pathname);
-  }, 7000);
+  }, 7000); // Message displays for 7 seconds
   
  return () => clearTimeout(timer);
     }
