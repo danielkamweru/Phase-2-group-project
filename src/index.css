@@ -1,0 +1,27 @@
+/* Tailwind base imports */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Themes */
+.light {
+  --bg-color: #f9fafb;
+  --text-color: #44484e;
+}
+
+.dark {
+  --bg-color: #0f172a;
+  --text-color: #183458;
+}
+
+.colorful {
+  --bg-color: linear-gradient(to right, #ff80b5, #80ffea, #ffe380);
+  --text-color: #1e293b;
+}
+
+/* Apply theme variables globally */
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+  transition: background 0.4s ease, color 0.4s ease;
+}

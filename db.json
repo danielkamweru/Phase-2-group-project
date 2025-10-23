@@ -1,0 +1,197 @@
+{
+    "projects": [
+      {
+        "name": "Portfolio Website",
+        "description": "A personal website showcasing skills, projects, and resume with a contact form and animations.",
+        "progress": 30,
+        "id": 1
+      },
+      {
+        "name": "Team Collaboration App",
+        "description": "A real-time chat and project management app for remote teams using React and Firebase.",
+        "progress": 67,
+        "id": 2
+      },
+      {
+        "name": "Fitness Tracker",
+        "description": "A mobile-responsive app to track workouts, steps, and calories burned using React Hooks and APIs.",
+        "progress": 100,
+        "id": 3
+      },
+      {
+        "name": "E-Commerce Dashboard",
+        "description": "An admin dashboard for tracking product inventory, sales analytics, and user data.",
+        "progress": 75,
+        "id": 4
+      },
+      {
+        "id": 5,
+        "name": "Smart Expense Tracker",
+        "description": "A React app that helps users track income and expenses with graphs and category filters.",
+        "progress": 30,
+        "deadline": "2026-03-01",
+        "tasks": [
+          {
+            "id": 1,
+            "title": "Set up category-based filtering",
+            "completed": false
+          },
+          {
+            "id": 2,
+            "title": "Create data visualization chart",
+            "completed": false
+          },
+          {
+            "id": 3,
+            "title": "Implement localStorage for offline use",
+            "completed": false
+          },
+          {
+            "id": 4,
+            "title": "Add export to CSV option",
+            "completed": false
+          }
+        ]
+      },
+      {
+        "name": "Learning Management System (LMS)",
+        "description": "A course management platform with user registration, lessons, quizzes, and progress tracking.",
+        "progress": 100,
+        "id": 6
+      },
+      {
+        "id": 7,
+        "name": "Event Planner App",
+        "description": "An event organization app allowing users to create, manage, and share events with friends.",
+        "progress": 65,
+        "deadline": "2025-12-05",
+        "tasks": [
+          {
+            "id": 1,
+            "title": "Design event cards with Tailwind",
+            "completed": true
+          },
+          {
+            "id": 2,
+            "title": "Add RSVP system",
+            "completed": true
+          },
+          {
+            "id": 3,
+            "title": "Implement Google Calendar sync",
+            "completed": false
+          },
+          {
+            "id": 4,
+            "title": "Add reminder notifications",
+            "completed": false
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "name": "Travel Journal",
+        "description": "A creative journal for travelers to log trips, add photos, and visualize routes on a map.",
+        "progress": 50,
+        "deadline": "2026-02-28",
+        "tasks": [
+          {
+            "id": 1,
+            "title": "Integrate Mapbox API",
+            "completed": false
+          },
+          {
+            "id": 2,
+            "title": "Add image upload feature",
+            "completed": true
+          },
+          {
+            "id": 3,
+            "title": "Create travel timeline view",
+            "completed": false
+          },
+          {
+            "id": 4,
+            "title": "Add filter by country",
+            "completed": true
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "name": "AI Blog Generator",
+        "description": "An AI-powered blog generator where users can input topics and get draft articles using an API.",
+        "progress": 20,
+        "deadline": "2026-05-20",
+        "tasks": [
+          {
+            "id": 1,
+            "title": "Connect to AI content API",
+            "completed": false
+          },
+          {
+            "id": 2,
+            "title": "Create editor with live preview",
+            "completed": false
+          },
+          {
+            "id": 3,
+            "title": "Implement markdown export",
+            "completed": false
+          },
+          {
+            "id": 4,
+            "title": "Add dark mode option",
+            "completed": true
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "name": "Smart Home Dashboard",
+        "description": "A futuristic interface to monitor and control smart devices in real-time.",
+        "progress": 80,
+        "deadline": "2025-11-30",
+        "tasks": [
+          {
+            "id": 1,
+            "title": "Connect with IoT API simulator",
+            "completed": true
+          },
+          {
+            "id": 2,
+            "title": "Add temperature & light controls",
+            "completed": true
+          },
+          {
+            "id": 3,
+            "title": "Design futuristic dashboard UI",
+            "completed": true
+          },
+          {
+            "id": 4,
+            "title": "Add voice command mock feature",
+            "completed": false
+          }
+        ]
+      },
+      {
+        "name": "fercher",
+        "description": "used to fetch data",
+        "progress": 100,
+        "id": 1761150332721
+      },
+      {
+        "name": "cleaner app",
+        "description": "cleans the bugs",
+        "progress": 36,
+        "id": 1761163337651
+      },
+      {
+        "name": "Project Alpha",
+        "description": "burning",
+        "progress": 70,
+        "id": 1761234833310
+      }
+    ]
+  }
