@@ -35,7 +35,7 @@ export function useLocalStorage(key, initialValue) { // Renaming this hook is op
         // Updated log message for clarity
         console.error("Error clearing sessionStorage key “" + key + "”: ", error);
     }
-  };
+  }
   // Return the value, the standard setter, AND the new clear function
   return [value, setValue, clearStorage];
 }

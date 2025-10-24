@@ -25,11 +25,19 @@ setSuccessMessage(null);
 // Clear state from the URL history to prevent re-showing on refresh/back/forward
  window.history.replaceState({}, document.title, window.location.pathname);
   }, 7000); // Message displays for 7 seconds
+<<<<<<< HEAD
   
  return () => clearTimeout(timer);
     }
   }, [location.state]); 
     // Open edit modal
+=======
+  // Cleanup function for the timer
+ return () => clearTimeout(timer);
+    }
+  }, [location.state]); // Re-run effect when navigation state changes
+  // Open edit modal
+>>>>>>> 5899991a6a58ff72d8fde0b2a315b3661e8fb2c0
   const handleEdit = (project) => {
     setEditing(project);
     setEditName(project.name);
@@ -49,12 +57,20 @@ setSuccessMessage(null);
   const handleConfirmDelete = () => {
     if (deletingId) {
       deleteProject(deletingId);
+<<<<<<< HEAD
       setDeletingId(null);
+=======
+      setDeletingId(null); // Close the confirmation modal
+>>>>>>> 5899991a6a58ff72d8fde0b2a315b3661e8fb2c0
     }
   };
   return (
  <div className="p-6 space-y-6">
+<<<<<<< HEAD
 
+=======
+  {/*  ADDED: SUCCESS NOTIFICATION BANNER */}
+>>>>>>> 5899991a6a58ff72d8fde0b2a315b3661e8fb2c0
   {successMessage && (
   <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg shadow-lg flex items-center justify-between">
    <div className="flex items-center">
@@ -102,6 +118,10 @@ project.progress === 100
  >
  <FaEdit /> Edit
  </button>
+<<<<<<< HEAD
+=======
+ {/* Now opens confirmation modal */}
+>>>>>>> 5899991a6a58ff72d8fde0b2a315b3661e8fb2c0
  <button
  onClick={() => setDeletingId(project.id)}
  className="flex-1 bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 flex items-center justify-center gap-2"
@@ -112,6 +132,10 @@ project.progress === 100
 </div>
  ))}
       </div>
+<<<<<<< HEAD
+=======
+{/* Edit Modal (Existing Modal) */}
+>>>>>>> 5899991a6a58ff72d8fde0b2a315b3661e8fb2c0
  {editing && (
 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
 <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl w-96">

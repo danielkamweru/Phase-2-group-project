@@ -23,7 +23,6 @@ function App() {
     <Router>
       {/* 1. Navbar is only visible if the user is logged in */}
       {isLoggedIn && <Navbar />}
-      
       <main>
         <Routes>
           {/* Public Route: Login */}
