@@ -74,8 +74,6 @@ project-tracker/
 ├── tailwind.config.js
 └── README.md
 
-yaml
-Copy code
 
 ---
 
@@ -109,9 +107,6 @@ Copy code
 npm run server
 By default, JSON Server runs on port 5000.
 Access the mock data at 👉 http://localhost:5000/projects
-
-🧪 Testing
-Project Tracker follows TDD (Test-Driven Development) principles.
 
 To run all test suites:
 
