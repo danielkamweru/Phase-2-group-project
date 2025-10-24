@@ -86,7 +86,7 @@ Make sure you have installed:
 
 ### 🪄 Steps  
 
-```bash
+
 # 1️⃣ Clone the repository
 git clone https://github.com/your-username/project-tracker.git
 
@@ -98,7 +98,7 @@ npm install
 
 # 4️⃣ Start the frontend
 npm start
-🌐 Running the App
+# 🌐 Running the App
 The app runs on port 3000 by default.
 To start the mock backend using JSON Server:
 
@@ -120,7 +120,7 @@ ProjectPage.test.js – Tests project fetching and rendering.
 
 useLocalStorage.test.js – Ensures custom hook data persistence.
 
-🎨 Theming
+## 🎨 Theming
 You can toggle between:
 
 🌞 Light Theme
@@ -131,7 +131,7 @@ You can toggle between:
 
 Theme settings are managed in Settings.jsx and applied globally via index.css using CSS variables.
 
-📁 JSON Server (Backend)
+ ## 📁 JSON Server (Backend)
 The db.json acts as your local mock database. Example structure:
 
 json
@@ -156,7 +156,7 @@ Copy code
 }
 To edit or add data manually, just open db.json and modify your entries.
 
-👥 Collaborators
+## 👥 Collaborators
 👤 Name	💼 Role
 Daniel Kamweru	initialsetup/components/db.json
 Brian Muigai	pages/secretary
@@ -165,7 +165,7 @@ Beatrice Kibucha	vice secretary/context
 
 🙌 A special thanks to everyone who contributed to making Project Tracker beautiful and functional!
 
-📜 License
+ ## 📜 License
 📝 MIT License
 © 2025 — Daniel Kamweru, Brian Muigai, Patrickson Mungai, and Beatrice Kibucha.
 Feel free to use and modify this project under the open MIT license, but please provide credit to the original authors.
