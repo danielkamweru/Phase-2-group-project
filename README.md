@@ -1,51 +1,52 @@
-# 📊 Project Tracker  
+# Project Tracker
 
 > A sleek, interactive, and modern **React-based project management tracker** built with **Tailwind CSS**, **React Router**, and **JSON Server**.  
-> Easily create, track, and manage your projects — from planning to progress completion — in a responsive and theme-customizable UI.  
+> Easily create, track, and manage your projects — from planning to progress completion — in a responsive and theme-customizable UI.
 
 ---
 
-## 🧭 Table of Contents  
-- [🚀 Features](#-features)  
-- [🛠️ Tech Stack](#️-tech-stack)  
-- [📂 Project Structure](#-project-structure)  
-- [⚙️ Installation & Setup](#️-installation--setup)  
-- [🌐 Running the App](#-running-the-app)  
-- [🧪 Testing](#-testing)  
-- [🎨 Theming](#-theming)  
-- [📁 JSON Server (Backend)](#-json-server-backend)  
-- [👥 Collaborators](#-collaborators)  
-- [📜 License](#-license)  
-- [💡 Future Enhancements](#-future-enhancements)  
+## Table of Contents
+
+- [🚀 Features](#-features)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [📂 Project Structure](#-project-structure)
+- [⚙️ Installation & Setup](#️-installation--setup)
+- [🌐 Running the App](#-running-the-app)
+- [🧪 Testing](#-testing)
+- [🎨 Theming](#-theming)
+- [📁 JSON Server (Backend)](#-json-server-backend)
+- [👥 Collaborators](#-collaborators)
+- [📜 License](#-license)
+- [💡 Future Enhancements](#-future-enhancements)
 
 ---
 
-## 🚀 Features  
+## Features
 
-✅ **Project Management** – Add, view, and track your projects easily.  
-✅ **Dynamic Progress Bars** – Visualize project completion.  
-✅ **Task Management** – Organize and monitor tasks within projects.  
-✅ **Modern Theming** – Switch between `Light 🌞`, `Dark 🌙`, and `Colorful 🌈` modes.  
-✅ **Persistent Data** – Data saved locally using `useLocalStorage` or via a mock API (`db.json`).  
-✅ **Responsive UI** – Tailwind CSS ensures a clean layout on all screen sizes.  
-✅ **TDD Ready** – Includes Jest and React Testing Library for test-driven development.  
-
----
-
-## 🛠️ Tech Stack  
-
-| Category | Technologies Used |
-|-----------|-------------------|
-| 🧠 **Frontend** | React, React Router |
-| 💅 **Styling** | Tailwind CSS |
-| 💾 **State Management** | React Context API |
-| 🧰 **Testing** | Jest, React Testing Library |
-| 🔗 **Mock Backend** | JSON Server |
-| ⚙️ **Build Tool** | Create React App |
+**Project Management** – Add, view, and track your projects easily.  
+ **Dynamic Progress Bars** – Visualize project completion.  
+ **Task Management** – Organize and monitor tasks within projects.  
+ **Modern Theming** – Switch between `Light 🌞`, `Dark 🌙`, and `Colorful 🌈` modes.  
+ **Persistent Data** – Data saved locally using `useLocalStorage` or via a mock API (`db.json`).  
+ **Responsive UI** – Tailwind CSS ensures a clean layout on all screen sizes.  
+ **TDD Ready** – Includes Jest and React Testing Library for test-driven development.
 
 ---
 
-## 📂 Project Structure  
+## Tech Stack
+
+| Category             | Technologies Used           |
+| -------------------- | --------------------------- |
+| **Frontend**         | React, React Router         |
+| **Styling**          | Tailwind CSS                |
+| **State Management** | React Context API           |
+| **Testing**          | Jest, React Testing Library |
+| **Mock Backend**     | JSON Server                 |
+| **Build Tool**       | Create React App            |
+
+---
+
+## Project Structure
 
 project-tracker/
 ├── src/
@@ -79,14 +80,16 @@ Copy code
 
 ---
 
-## ⚙️ Installation & Setup  
+## Installation & Setup
 
-### 🧩 Prerequisites
+### Prerequisites
+
 Make sure you have installed:
+
 - [Node.js](https://nodejs.org/en/) (v16+)
 - npm or yarn
 
-### 🪄 Steps  
+### Steps
 
 ```bash
 # 1️⃣ Clone the repository
@@ -188,3 +191,5 @@ React + Tailwind + JSON Server
 
 yaml
 Copy code
+
+```
