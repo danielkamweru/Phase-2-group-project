@@ -3,8 +3,9 @@ import { useState } from "react";
 // 1. Import necessary hook from React Router for redirection
 import { useNavigate } from "react-router-dom"; 
 // 2. Import the Auth context hook (assuming this is where 'login' lives)
-import { useAuth } from "../context/AuthContext"; 
-export default function Login() {
+import { useAuth } from "../context/AuthContext";
+
+function Login() {
   // FIX: Use the useAuth hook to correctly access the 'login' function
   const { login } = useAuth(); 
   // 3. Initialize the navigate hook
@@ -99,3 +100,4 @@ export default function Login() {
     </div>
   );
 }
+export default Login;
