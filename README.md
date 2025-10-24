@@ -157,11 +157,13 @@ Copy code
 To edit or add data manually, just open db.json and modify your entries.
 
 ## 👥 Collaborators
-👤 Name	💼 Role
-Daniel Kamweru	initialsetup/components/db.json
-Brian Muigai	pages/secretary
-Patrickson Mungai	hooks/api
-Beatrice Kibucha	vice secretary/context
+
+| 👤 Name | 💼 Role |
+|----------|-----------|
+| **Daniel Kamweru** | initialsetup/components/db.json |
+| **Brian Muigai** | pages/secretary |
+| **Patrickson Mungai** | hooks/api |
+| **Beatrice Kibucha** | vice secretary/context |
 
 🙌 A special thanks to everyone who contributed to making Project Tracker beautiful and functional!
 
