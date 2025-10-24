@@ -91,7 +91,7 @@ Make sure you have installed:
 
 
 # 1️⃣ Clone the repository
-git clone https://github.com/your-username/project-tracker.git
+git clone https://github.com/danielkamweru/Phase-2-group-project
 
 # 2️⃣ Move into the project directory
 cd project-tracker
@@ -178,8 +178,7 @@ Feel free to use and modify this project under the open MIT license, but please 
 💡 Future Enhancements
 ✨ Add user authentication (JWT-based login).
 📅 Implement calendar-based project timelines.
-📊 Integrate real-time analytics for project progress.
-☁️ Deploy on Vercel or Netlify with live JSON Server on Render.
+📊 Integrate real-time analytics for project progress
 
 🖤 Built with passion using:
 React + Tailwind + JSON Server

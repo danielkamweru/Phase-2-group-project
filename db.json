@@ -4,28 +4,28 @@
       "name": "Portfolio Website",
       "description": "A personal website showcasing skills, projects, and resume with a contact form and animations.",
       "progress": 30,
-      "id": 1
+      "id": "1"
     },
     {
       "name": "Team Collaboration App",
       "description": "A real-time chat and project management app for remote teams using React and Firebase.",
       "progress": 67,
-      "id": 2
+      "id": "2"
     },
     {
       "name": "Fitness Tracker",
       "description": "A mobile-responsive app to track workouts, steps, and calories burned using React Hooks and APIs.",
       "progress": 100,
-      "id": 3
+      "id": "3"
     },
     {
       "name": "E-Commerce Dashboard",
       "description": "An admin dashboard for tracking product inventory, sales analytics, and user data.",
       "progress": 75,
-      "id": 4
+      "id": "4"
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Smart Expense Tracker",
       "description": "A React app that helps users track income and expenses with graphs and category filters.",
       "progress": 30,
@@ -57,10 +57,10 @@
       "name": "Learning Management System (LMS)",
       "description": "A course management platform with user registration, lessons, quizzes, and progress tracking.",
       "progress": 100,
-      "id": 6
+      "id": "6"
     },
     {
-      "id": 7,
+      "id": "7",
       "name": "Event Planner App",
       "description": "An event organization app allowing users to create, manage, and share events with friends.",
       "progress": 65,
@@ -89,7 +89,7 @@
       ]
     },
     {
-      "id": 8,
+      "id": "8",
       "name": "Travel Journal",
       "description": "A creative journal for travelers to log trips, add photos, and visualize routes on a map.",
       "progress": 50,
@@ -118,7 +118,7 @@
       ]
     },
     {
-      "id": 9,
+      "id": "9",
       "name": "AI Blog Generator",
       "description": "An AI-powered blog generator where users can input topics and get draft articles using an API.",
       "progress": 20,
@@ -147,7 +147,7 @@
       ]
     },
     {
-      "id": 10,
+      "id": "10",
       "name": "Smart Home Dashboard",
       "description": "A futuristic interface to monitor and control smart devices in real-time.",
       "progress": 80,
@@ -179,24 +179,24 @@
       "name": "fercher",
       "description": "used to fetch data",
       "progress": 100,
-      "id": 1761150332721
+      "id": "1761150332721"
     },
     {
       "name": "cleaner app",
       "description": "cleans the bugs",
       "progress": 36,
-      "id": 1761163337651
+      "id": "1761163337651"
     },
     {
       "name": "Project Alpha",
       "description": "burning",
       "progress": 70,
-      "id": 1761234833310
+      "id": "1761234833310"
     },
     {
-      "id": 1761296802518,
-      "name": "Portfolio-app",
-      "description": "my first project portfolio application ",
+      "id": 1761287051366,
+      "name": "gyughp9l",
+      "description": "yufygygy",
       "progress": 0,
       "tasks": []
     }
