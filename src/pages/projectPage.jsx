@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; 
 // Assuming JSON Server is running on port 5000
-const API_URL = "http://localhost:5000/projects";
+const API_URL = "https://poppy-flix-server-beta.vercel.app/projects";
 // Component for the Skeleton Loader
 const ProjectCardSkeleton = () => (
     <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100 h-40 animate-pulse">
