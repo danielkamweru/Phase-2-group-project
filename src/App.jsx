@@ -8,14 +8,14 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import About from "./pages/About";
 // Import needed React Router components and the custom auth hook
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
 import { useAuth } from "./context/AuthContext"; // Use the custom hook for auth
 
-function App() {
+export default function App() {
   // Use the custom hook to get the user state from AuthContext
-  const { user } = useAuth(); 
+  const { user } = useAuth()
   // Boolean to quickly check if the user is logged in
-  const isLoggedIn = !!user; 
+  const isLoggedIn = !!user
   const ProtectedRoute = ({ element: Element }) => {
     return isLoggedIn ? Element : <Navigate to="/login" replace />;
   };
@@ -49,4 +49,3 @@ function App() {
   );
 }
 
-export default App;
