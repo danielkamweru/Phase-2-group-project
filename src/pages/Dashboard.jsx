@@ -1,9 +1,9 @@
+
 import React, { useState, useEffect } from "react";
 // useLocation to read navigation state from ProjectsPage
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom"; 
 import { useProjects } from "../context/ProjectContext";
 import { FaTrash, FaEdit } from "react-icons/fa";
-
 const Dashboard = () => {
   const { projects, deleteProject, updateProject } = useProjects();
   const [editing, setEditing] = useState(null);
@@ -11,28 +11,25 @@ const Dashboard = () => {
   const [editName, setEditName] = useState("");
   const [editDesc, setEditDesc] = useState("");
   const [editProgress, setEditProgress] = useState(0);
-  
-  // State for success message from joining a project
+  //  State for success message from joining a project
   const location = useLocation();
   const [successMessage, setSuccessMessage] = useState(null);
-
-  // useEffect to handle incoming success state
+  //useEffect to handle incoming success state
   useEffect(() => {
     if (location.state && location.state.joinSuccess) {
-      // Use the message passed from ProjectsPage
-      setSuccessMessage(location.state.message);
-      // Clear the message after a few seconds
-      const timer = setTimeout(() => {
-        setSuccessMessage(null);
-        // Clear state from the URL history to prevent re-showing on refresh/back/forward
-        window.history.replaceState({}, document.title, window.location.pathname);
-      }, 7000); // Message displays for 7 seconds
+  // Use the message passed from ProjectsPage
+ setSuccessMessage(location.state.message);
+ // Clear the message after a few seconds
+const timer = setTimeout(() => {
+  setSuccessMessage(null);
+  // Clear state from the URL history to prevent re-showing on refresh/back/forward
+  window.history.replaceState({}, document.title, window.location.pathname);
+}, 7000); 
 
-      // Cleanup function for the timer
-      return () => clearTimeout(timer);
+// Cleanup function for the timer
+return () => clearTimeout(timer);
     }
   }, [location.state]); // Re-run effect when navigation state changes
-
   // Open edit modal
   const handleEdit = (project) => {
     setEditing(project);
@@ -40,7 +37,6 @@ const Dashboard = () => {
     setEditDesc(project.description);
     setEditProgress(project.progress);
   };
-
   // Save changes
   const handleSave = () => {
     updateProject(editing.id, {
@@ -50,18 +46,17 @@ const Dashboard = () => {
     });
     setEditing(null);
   };
-
   // Confirms and executes the deletion
   const handleConfirmDelete = () => {
     if (deletingId) {
       deleteProject(deletingId);
-      setDeletingId(null); // Close the confirmation modal
+      setDeletingId(null);
     }
   };
 
   return (
     <div className="p-6 space-y-6">
-      {/* ADDED: SUCCESS NOTIFICATION BANNER */}
+      {/* Success Notification Banner */}
       {successMessage && (
         <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg shadow-lg flex items-center justify-between">
           <div className="flex items-center">
@@ -69,12 +64,6 @@ const Dashboard = () => {
           </div>
         </div>
       )}
-
-      <h2 className="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">
-        Project Dashboard
-      </h2>
-
-      {/* Project Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {projects.map((project) => (
           <div
@@ -106,7 +95,6 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-
             {/* Action Buttons */}
             <div className="flex gap-2 mt-3">
               <button
@@ -115,7 +103,7 @@ const Dashboard = () => {
               >
                 <FaEdit /> Edit
               </button>
-
+              {/* Now opens confirmation modal */}
               <button
                 onClick={() => setDeletingId(project.id)}
                 className="flex-1 bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 flex items-center justify-center gap-2"
@@ -126,8 +114,7 @@ const Dashboard = () => {
           </div>
         ))}
       </div>
-
-      {/* Edit Modal (Existing Modal) */}
+      {/* Edit Modal */}
       {editing && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl w-96">
@@ -142,7 +129,8 @@ const Dashboard = () => {
                 className="p-2 border rounded-lg text-gray-800 dark:text-gray-100 dark:bg-gray-700 dark:border-gray-600"
                 placeholder="Project Name"
               />
-              <textarea
+              <input
+                type="text"
                 value={editDesc}
                 onChange={(e) => setEditDesc(e.target.value)}
                 className="p-2 border rounded-lg text-gray-800 dark:text-gray-100 dark:bg-gray-700 dark:border-gray-600"
@@ -175,7 +163,6 @@ const Dashboard = () => {
           </div>
         </div>
       )}
-
       {/* Deletion Confirmation Modal */}
       {deletingId && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">

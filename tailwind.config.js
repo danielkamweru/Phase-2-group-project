@@ -2,7 +2,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
     content: [
-      // Verify these paths match where your React components are located
+      //Verify these paths match where your React components 
       "./src/**/*.{js,jsx,ts,tsx}", 
       "./public/index.html",
     ],
