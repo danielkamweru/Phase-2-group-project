@@ -181,5 +181,4 @@ React + Tailwind + JSON Server
 
 “Organize your ideas, visualize your progress, and track your success!” 🚀
 
-yaml
-Copy code
+
