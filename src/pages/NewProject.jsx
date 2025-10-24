@@ -10,16 +10,16 @@ const NewProject = () => {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!form.name.trim()) return; // Simple validation
+    if (!form.name.trim()) return; 
 
     // Add project to context with default values
     addProject({
       ...form,
-      id: Date.now(), // Unique ID
+      id: Date.now(), 
       progress: 0,
       tasks: [],
     });
-    setForm({ name: "", description: "" }); // Reset form
+    setForm({ name: "", description: "" }); 
     // Show success message
     setShowSuccess(true);
     // Hide the success message after 4 seconds
