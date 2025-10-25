@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
     const userData = { email: email, isLoggedIn: true };
     setUser(userData);
     // CHANGE: Updated log message
-    console.log(`User logged in for this session: ${email}`);
+    console.log(`User logged in for this session: ${email}`)
   };
   const logout = () => {
     // Clears user from both state and localStorage
