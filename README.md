@@ -22,7 +22,7 @@
 ---
 ## Home page of the app
 
-![Screenshot](./assets/screenshot.png)
+![Screenshot](./assets/app.png)
 
 ## Features
 
@@ -54,6 +54,7 @@
 ---
 
 project-tracker/
+
 ├── src/
 │ ├── components/
 │ │ ├── Navbar.jsx
