@@ -20,6 +20,9 @@
 - [💡 Future Enhancements](#-future-enhancements)
 
 ---
+## Home page of the app
+
+![Screenshot](./assets/screenshot.png)
 
 ## Features
 
@@ -47,6 +50,8 @@
 ---
 
 ## Project Structure
+
+---
 
 project-tracker/
 ├── src/
