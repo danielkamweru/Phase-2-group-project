@@ -1,86 +1,79 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
-// Create the Project Context
-const ProjectContext = createContext();
-// import { ProjectContext } from './context/ProjectContext';
-export { ProjectContext };
-export const ProjectProvider = ({ children }) => {
-  const [projects, setProjects] = useState([]);
-  // Using port 5000 as typical for JSON Server, assuming it's running.
-  const API_URL = "http://localhost:5000/projects"; 
+import React, { useState } from "react";
+import { useProjects } from "../context/ProjectContext";
 
-  // Fetch projects from JSON Server on mount
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const res = await fetch(API_URL);
-        // Check for HTTP errors (e.g., 404, 500)
-        if (!res.ok) {
-            throw new Error(`HTTP error! status: ${res.status}`);
-        }
-        const data = await res.json();
-        setProjects(data);
-      } catch (err) {
-        // Log a user-friendly error if the JSON server is likely not running
-        console.error("Failed to fetch projects. Make sure your JSON server is running on http://localhost:5000:", err);
-      }
-    };
-    fetchProjects();
-  }, []);
+const NewProject = () => {
+  const { addProject } = useProjects(); // Access context
+  const [form, setForm] = useState({ name: "", description: "" });
+  // New state to manage success message visibility
+  const [showSuccess, setShowSuccess] = useState(false);
 
-  // Add a new project
-  const addProject = async (project) => {
-    try {
-      const res = await fetch(API_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(project),
-      });
-      const data = await res.json();
-      setProjects((prev) => [...prev, data]);
-    } catch (err) {
-      console.error("Failed to add project:", err);
-    }
-  };
-  // Delete a project by ID
-  const deleteProject = async (id) => {
-    try {
-      await fetch(`${API_URL}/${id}`, { method: "DELETE" });
-      setProjects((prev) => prev.filter((p) => p.id !== id));
-    } catch (err) {
-      console.error("Failed to delete project:", err);
-    }
-  };
+  // Handle form submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!form.name.trim()) return; // Simple validation
 
-  // Update a project by ID
-  const updateProject = async (id, updatedProject) => {
-    try {
-      const res = await fetch(`${API_URL}/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedProject),
-      });
-      const data = await res.json();
-      // Ensure we use the server's response (data) which includes the updated data
-      setProjects((prev) => prev.map((p) => (p.id === data.id ? data : p)));
-    } catch (err) {
-      console.error("Failed to update project:", err);
-    }
+    // Add project to context with default values
+    addProject({
+      ...form,
+      id: Date.now(), // Unique ID
+      progress: 0,
+      tasks: [],
+    });
+    setForm({ name: "", description: "" }); // Reset form
+    // Show success message
+    setShowSuccess(true);
+    // Hide the success message after 4 seconds
+    setTimeout(() => {
+      setShowSuccess(false);
+    }, 4000);
   };
 
   return (
-    <ProjectContext.Provider
-      value={{ 
-        projects, 
-        addProject, 
-        deleteProject, 
-        updateProject 
-      }}
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-lg relative" // Added 'relative' for absolute positioning of the message
     >
-      {children}
-    </ProjectContext.Provider>
+      <h2 className="text-2xl font-semibold mb-4 text-center">Add New Project</h2>
+
+      {/* Success Prompt */}
+      {showSuccess && (
+        <div className="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 p-4 rounded-lg shadow-xl bg-green-500 text-white flex items-center space-x-2 animate-bounce-in">
+          {/* Colorful Star Icon (using an emoji) */}
+          <span className="text-xl">✨</span>
+          <p className="font-bold">
+             YOU HAVE SUCCESSFULLY CREATED A NEW PROJECT THAT IS NOW VISIBLE IN THE DASHBOARD PAGE!
+          <p className="font-medium"></p>
+          </p>
+        </div>
+      )}
+
+      {/* Project Name */}
+      <input
+        type="text"
+        placeholder="Project Name"
+        value={form.name}
+        onChange={(e) => setForm({ ...form, name: e.target.value })}
+        className="w-full p-2 mb-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+
+      {/* Project Description */}
+      <textarea
+        placeholder="Project Description"
+        value={form.description}
+        onChange={(e) => setForm({ ...form, description: e.target.value })}
+        className="w-full p-2 mb-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+
+      {/* Submit Button */}
+      <button
+        type="submit"
+        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-500 transition-colors"
+        disabled={!form.name.trim()} // Optionally disable if name is empty
+      >
+        Create Project
+      </button>
+    </form>
   );
 };
-// Custom hook for easy context usage (Recommended way to consume)
-export const useProjects = () => useContext(ProjectContext); 
-// when the custom hook is provided.
-export default ProjectContext;
+
+export default NewProject;
