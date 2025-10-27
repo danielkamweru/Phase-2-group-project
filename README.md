@@ -22,7 +22,7 @@
 ---
 ## Home page of the app
 
-![Screenshot](./assets/app.png)
+![Screenshot](app.png)
 
 ## Features
 
