@@ -6,10 +6,7 @@ export { ProjectContext };
 export const ProjectProvider = ({ children }) => {
   const [projects, setProjects] = useState([]);
   // Using port 5000 as typical for JSON Server, assuming it's running.
-
-  
-  const API_URL = "https://poppy-flix-server-orpin.vercel.app/projects"; 
-
+  const API_URL = "http://localhost:5000/projects"; 
 
   // Fetch projects from JSON Server on mount
   useEffect(() => {
