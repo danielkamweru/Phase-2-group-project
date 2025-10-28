@@ -9,7 +9,7 @@ const AUTH_KEY = "auth-user";
 // Create the Auth Context
 const AuthContext = createContext();
 // Ensure the raw context object is exported for useContext(AuthContext)
-export { AuthContext };
+export { AuthContext }
 
 // Auth Provider Component
 export const AuthProvider = ({ children }) => {
@@ -20,13 +20,13 @@ export const AuthProvider = ({ children }) => {
     const userData = { email: email, isLoggedIn: true };
     setUser(userData);
     // CHANGE: Updated log message
-    console.log(`User logged in for this session: ${email}`);
+    console.log(`User logged in for this session: ${email}`)
   };
   const logout = () => {
     // Clears user from both state and localStorage
     clearUserStorage(); // Uses the clear function from the hook
     //  Updated log message
-    console.log("User logged out and session cleared.");
+    console.log("User logged out and session cleared.")
   };
   const contextValue = {
     user,

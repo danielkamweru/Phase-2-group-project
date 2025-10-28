@@ -20,6 +20,9 @@
 - [💡 Future Enhancements](#-future-enhancements)
 
 ---
+## Home page of the app
+
+![Screenshot](app.png)
 
 ## Features
 
@@ -48,7 +51,10 @@
 
 ## Project Structure
 
+---
+
 project-tracker/
+
 ├── src/
 │ ├── components/
 │ │ ├── Navbar.jsx
