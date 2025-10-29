@@ -1,9 +1,9 @@
-
 import React, { useState, useEffect } from "react";
 // useLocation to read navigation state from ProjectsPage
 import { useLocation } from "react-router-dom"; 
 import { useProjects } from "../context/ProjectContext";
 import { FaTrash, FaEdit } from "react-icons/fa";
+
 const Dashboard = () => {
   const { projects, deleteProject, updateProject } = useProjects();
   const [editing, setEditing] = useState(null);
@@ -11,9 +11,12 @@ const Dashboard = () => {
   const [editName, setEditName] = useState("");
   const [editDesc, setEditDesc] = useState("");
   const [editProgress, setEditProgress] = useState(0);
-  //  State for success message from joining a project
+  // NEW STATE: For handling validation errors in the progress field
+  const [progressError, setProgressError] = useState(null); 
+  // State for success message from joining a project
   const location = useLocation();
   const [successMessage, setSuccessMessage] = useState(null);
+
   //useEffect to handle incoming success state
   useEffect(() => {
     if (location.state && location.state.joinSuccess) {
@@ -23,29 +26,42 @@ const Dashboard = () => {
 const timer = setTimeout(() => {
   setSuccessMessage(null);
   // Clear state from the URL history to prevent re-showing on refresh/back/forward
-  window.history.replaceState({}, document.title, window.location.pathname);
 }, 7000); 
 
 // Cleanup function for the timer
 return () => clearTimeout(timer);
     }
   }, [location.state]); // Re-run effect when navigation state changes
+  
   // Open edit modal
   const handleEdit = (project) => {
     setEditing(project);
     setEditName(project.name);
     setEditDesc(project.description);
     setEditProgress(project.progress);
+    setProgressError(null); // Clear any previous error when opening
   };
-  // Save changes
+
+  // Save changes - UPDATED WITH VALIDATION
   const handleSave = () => {
+    const progressValue = Number(editProgress);
+
+    // *** Validation Check ***
+    if (progressValue < 0 || progressValue > 100) {
+      setProgressError("Please input value from 0-100 only.");
+      return; // Stop the save process
+    }
+
+    // Clear error and proceed with save if validation passes
+    setProgressError(null);
     updateProject(editing.id, {
       name: editName,
       description: editDesc,
-      progress: Number(editProgress),
+      progress: progressValue,
     });
     setEditing(null);
   };
+  
   // Confirms and executes the deletion
   const handleConfirmDelete = () => {
     if (deletingId) {
@@ -139,15 +155,27 @@ return () => clearTimeout(timer);
               <input
                 type="number"
                 value={editProgress}
-                onChange={(e) => setEditProgress(e.target.value)}
-                className="p-2 border rounded-lg text-gray-800 dark:text-gray-100 dark:bg-gray-700 dark:border-gray-600"
+                onChange={(e) => {
+                  setEditProgress(e.target.value);
+                  // Clear error as user starts typing again
+                  setProgressError(null); 
+                }}
+                className={`p-2 border rounded-lg text-gray-800 dark:text-gray-100 dark:bg-gray-700 ${progressError ? 'border-red-500 dark:border-red-500' : 'dark:border-gray-600'}`}
                 placeholder="Progress %"
                 min="0"
                 max="100"
               />
+              {/* Validation Error Message */}
+              {progressError && (
+                <p className="text-red-500 text-sm mt-1">{progressError}</p>
+              )}
+              {/* --- */}
               <div className="flex justify-end gap-2 mt-3">
                 <button
-                  onClick={() => setEditing(null)}
+                  onClick={() => {
+                    setEditing(null);
+                    setProgressError(null); // Clear error on cancel
+                  }}
                   className="px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   Cancel
