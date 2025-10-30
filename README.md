@@ -52,9 +52,6 @@
 ## Project Structure
 
 ---
-bash
-copy code
-
 project-tracker/
 
 ├── src/
