@@ -52,7 +52,6 @@
 ## Project Structure
 
 ---
-
 project-tracker/
 
 ├── src/
@@ -128,6 +127,9 @@ App.test.js – Verifies main app rendering and routing.
 ProjectPage.test.js – Tests project fetching and rendering.
 
 useLocalStorage.test.js – Ensures custom hook data persistence.
+
+### Click the link to visit our app
+[phase-2-group-project-swart.vercel.app](https://phase-2-group-project-swart.vercel.app)
 
 ## 🎨 Theming
 You can toggle between:
