@@ -9,36 +9,45 @@ export const ProjectProvider = ({ children }) => {
   const [projects, setProjects] = useState([]);
   const API_URL = "https://project-tracker-backend-beta.vercel.app/projects";
 
-  // Load Projects from Backend and merge with localStorage
+  const fetchProjects = async () => {
+    try {
+      // Get backend projects
+      const res = await fetch(API_URL);
+      if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+      const backendProjects = await res.json();
+      
+      // Get local projects
+      const localProjects = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '[]');
+      
+      // Merge projects (backend + local, avoiding duplicates)
+      const allProjects = [...backendProjects];
+      localProjects.forEach(localProject => {
+        if (!backendProjects.find(p => String(p.id) === String(localProject.id))) {
+          allProjects.push(localProject);
+        }
+      });
+      
+      setProjects(allProjects);
+      return true;
+    } catch (err) {
+      // Fallback to localStorage only
+      const localProjects = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '[]');
+      setProjects(localProjects);
+      console.error("Failed to fetch from backend, using localStorage:", err);
+      return false;
+    }
+  };
+
+  // Initial load and setup polling
   useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        // Get backend projects
-        const res = await fetch(API_URL);
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-        const backendProjects = await res.json();
-        
-        // Get local projects
-        const localProjects = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '[]');
-        
-        // Merge projects (backend + local, avoiding duplicates)
-        const allProjects = [...backendProjects];
-        localProjects.forEach(localProject => {
-          if (!backendProjects.find(p => String(p.id) === String(localProject.id))) {
-            allProjects.push(localProject);
-          }
-        });
-        
-        setProjects(allProjects);
-        console.log("Projects loaded from backend and localStorage.");
-      } catch (err) {
-        // Fallback to localStorage only
-        const localProjects = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '[]');
-        setProjects(localProjects);
-        console.error("Failed to fetch from backend, using localStorage:", err);
-      }
-    };
     fetchProjects();
+    
+    // Poll for updates every 3 seconds
+    const interval = setInterval(() => {
+      fetchProjects();
+    }, 3000);
+    
+    return () => clearInterval(interval);
   }, []);
 
   // Save to localStorage whenever projects change
@@ -69,6 +78,8 @@ export const ProjectProvider = ({ children }) => {
       
       if (res.ok) {
         console.log("Project synced to backend.");
+        // Refresh immediately to get latest data
+        setTimeout(() => fetchProjects(), 500);
       } else {
         console.log("Backend sync failed, project saved locally.");
       }
@@ -90,6 +101,8 @@ export const ProjectProvider = ({ children }) => {
       
       if (res.ok) {
         console.log("Project deleted from backend.");
+        // Refresh immediately to get latest data
+        setTimeout(() => fetchProjects(), 500);
       } else {
         console.log("Backend delete failed, project deleted locally.");
       }
@@ -121,6 +134,8 @@ export const ProjectProvider = ({ children }) => {
       
       if (res.ok) {
         console.log("Project updated in backend.");
+        // Refresh immediately to get latest data
+        setTimeout(() => fetchProjects(), 500);
       } else {
         console.log("Backend update failed, project updated locally.");
       }
