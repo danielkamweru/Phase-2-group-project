@@ -43,7 +43,7 @@ return () => clearTimeout(timer);
   };
 
   // Save changes - UPDATED WITH VALIDATION
-  const handleSave = () => {
+  const handleSave = async () => {
     const progressValue = Number(editProgress);
 
     // *** Validation Check ***
@@ -54,7 +54,7 @@ return () => clearTimeout(timer);
 
     // Clear error and proceed with save if validation passes
     setProgressError(null);
-    updateProject(editing.id, {
+    await updateProject(editing.id, {
       name: editName,
       description: editDesc,
       progress: progressValue,
@@ -63,9 +63,9 @@ return () => clearTimeout(timer);
   };
   
   // Confirms and executes the deletion
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     if (deletingId) {
-      deleteProject(deletingId);
+      await deleteProject(deletingId);
       setDeletingId(null);
     }
   };

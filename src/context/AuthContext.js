@@ -1,43 +1,55 @@
-import React, { createContext, useContext } from "react";
-// Assuming useLocalStorage is in ../hooks/useLocalStorage
-import { useLocalStorage } from "../hooks/useLocalStorage"; 
-// Define the initial state structure for an unauthenticated user
-const initialUser = null; 
-// The key for localStorage
-const AUTH_KEY = "auth-user";
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { auth } from "../firebase";
+import {
+  signInWithEmailAndPassword,
+  signOut,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged
+} from "firebase/auth";
 
-// Create the Auth Context
 const AuthContext = createContext();
-// Ensure the raw context object is exported for useContext(AuthContext)
-export { AuthContext }
+export { AuthContext };
 
-// Auth Provider Component
 export const AuthProvider = ({ children }) => {
-  // [user, setUser, clearUserStorage] matches the return array of the hook
-  const [user, setUser, clearUserStorage] = useLocalStorage(AUTH_KEY, initialUser); 
-  const login = (email) => {
-    // Sets the user object, which is now automatically persisted by useLocalStorage
-    const userData = { email: email, isLoggedIn: true };
-    setUser(userData);
-    // CHANGE: Updated log message
-    console.log(`User logged in for this session: ${email}`)
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  // Watch for Firebase login state changes
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (firebaseUser) => {
+      setUser(firebaseUser);
+      setLoading(false);
+    });
+    return unsubscribe;
+  }, []);
+
+  // Login existing user
+  const login = async (email, password) => {
+    return signInWithEmailAndPassword(auth, email, password);
   };
-  const logout = () => {
-    // Clears user from both state and localStorage
-    clearUserStorage(); // Uses the clear function from the hook
-    //  Updated log message
-    console.log("User logged out and session cleared.")
+
+  // Logout current user
+  const logout = async () => {
+    return signOut(auth);
   };
-  const contextValue = {
+
+  // Signup new user (for collaborators)
+  const signup = async (email, password) => {
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
+
+  const value = {
     user,
     login,
     logout,
+    signup
   };
+
   return (
-    <AuthContext.Provider value={contextValue}>
-      {children}
+    <AuthContext.Provider value={value}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
-// Custom Hook (Recommended way to consume the context)
+
 export const useAuth = () => useContext(AuthContext);

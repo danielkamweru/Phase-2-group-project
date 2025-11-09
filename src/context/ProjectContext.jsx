@@ -1,8 +1,5 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 
-// Key for localStorage
-const LOCAL_STORAGE_KEY = "localProjectsData";
-
 const ProjectContext = createContext();
 export { ProjectContext };
 
@@ -10,75 +7,88 @@ export const ProjectProvider = ({ children }) => {
   const [projects, setProjects] = useState([]);
   const API_URL = "https://project-tracker-backend-beta.vercel.app/projects";
 
-  //  Load Projects from LocalStorage or Backend (Runs ONCE)
+  // Load Projects from Backend (Runs ONCE)
   useEffect(() => {
     const fetchProjects = async () => {
-      // Try to load from localStorage first
-      const storedProjects = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (storedProjects) {
-        setProjects(JSON.parse(storedProjects));
-        console.log("Projects loaded from localStorage.");
-        return; // Stop here if local data is found
-      }
-
-      // If no local data, fetch from backend
       try {
         const res = await fetch(API_URL);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         const data = await res.json();
         setProjects(data);
-        // Save the initial backend data to localStorage for the first session
-        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
-        console.log("Projects fetched from backend and saved to localStorage.");
+        console.log("Projects fetched from backend.");
       } catch (err) {
-        console.error(
-          "Failed to fetch projects. Backend may be offline or misconfigured:",
-          err
-        );
+        console.error("Failed to fetch projects:", err);
       }
     };
     fetchProjects();
   }, []);
 
-  //  Persist Projects to LocalStorage (Runs whenever 'projects' changes)
-  useEffect(() => {
-    // Only save if the array is populated to prevent wiping real data on initial load
-    if (projects.length > 0) {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(projects));
-      console.log("Projects state updated and saved to localStorage.");
-    }
-  }, [projects]);
-
-  //  Add project — local only (persistence handled by useEffect)
-  const addProject = (project) => {
+  // Add project to backend and update local state
+  const addProject = async (project) => {
     const newProject = {
       id: Date.now(),
-      // Ensure progress is a number, defaulting to 0, and capping it at 100
       ...project,
-      progress: Math.min(100, Number(project.progress) || 0), 
+      progress: Math.min(100, Number(project.progress) || 0),
     };
-    setProjects((prev) => [...prev, newProject]);
+    
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newProject),
+      });
+      
+      if (res.ok) {
+        const savedProject = await res.json();
+        setProjects((prev) => [...prev, savedProject]);
+        console.log("Project added to backend.");
+      }
+    } catch (err) {
+      console.error("Failed to add project:", err);
+    }
   };
 
-  // Delete project — local only (persistence handled by useEffect)
-  const deleteProject = (id) => {
-    setProjects((prev) => prev.filter((p) => p.id !== id));
+  // Delete project from backend and update local state
+  const deleteProject = async (id) => {
+    try {
+      const res = await fetch(`${API_URL}/${id}`, {
+        method: "DELETE",
+      });
+      
+      if (res.ok) {
+        setProjects((prev) => prev.filter((p) => p.id !== id));
+        console.log("Project deleted from backend.");
+      }
+    } catch (err) {
+      console.error("Failed to delete project:", err);
+    }
   };
 
-  // Update project — local only (persistence handled by useEffect)
-  const updateProject = (id, updatedProject) => {
-    // Check if a 'progress' update is included
+  // Update project in backend and update local state
+  const updateProject = async (id, updatedProject) => {
     if (updatedProject.progress !== undefined) {
-        // Enforce the 100% maximum limit for progress
-        updatedProject.progress = Math.min(100, Number(updatedProject.progress));
+      updatedProject.progress = Math.min(100, Number(updatedProject.progress));
     }
     
-    setProjects((prev) =>
-      prev.map((p) =>
-        String(p.id) === String(id) ? { ...p, ...updatedProject } : p
-      )
-    );
-    return true; // pretend success
+    try {
+      const res = await fetch(`${API_URL}/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedProject),
+      });
+      
+      if (res.ok) {
+        const updated = await res.json();
+        setProjects((prev) =>
+          prev.map((p) => (String(p.id) === String(id) ? updated : p))
+        );
+        console.log("Project updated in backend.");
+        return true;
+      }
+    } catch (err) {
+      console.error("Failed to update project:", err);
+    }
+    return false;
   };
 
   return (

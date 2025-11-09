@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from "react";
-
 // Keys for localStorage
 const THEME_KEY = "user-theme-setting";
 const FONT_SIZE_KEY = "user-font-size-setting";
-
 // Helper function to get initial theme from localStorage or fall back to 'light'
 const getInitialTheme = () => {
   return localStorage.getItem(THEME_KEY) || "light"; // Default remains 'light' if nothing is saved
 };
-
 // Helper function to get initial font size from localStorage or fall back to 1.0
 const getInitialFontSize = () => {
   const savedSize = localStorage.getItem(FONT_SIZE_KEY);
   return savedSize ? parseFloat(savedSize) : 1.0; // Default remains 1.0 if nothing is saved
 };
-
 const Settings = () => {
   // Initialize state from localStorage
   const [theme, setTheme] = useState(getInitialTheme);

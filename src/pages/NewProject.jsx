@@ -8,11 +8,11 @@ const NewProject = () => {
   const [showSuccess, setShowSuccess] = useState(false);
 
   // Handle form submission
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.name.trim()) return; // Simple validation 
     // the 'addProject' function in ProjectContext handles id and progress
-    addProject({
+    await addProject({
       ...form,
     });
     setForm({ name: "", description: "" }); // Reset form

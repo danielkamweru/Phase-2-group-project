@@ -5,45 +5,50 @@ import ProjectPage from "./pages/projectPage";
 import NewProject from "./pages/NewProject";  
 import Settings from "./components/Settings";
 import Dashboard from "./pages/Dashboard"; 
-import Login from "./pages/Login";
+import AuthPage from "./pages/AuthPage"; // Combined Login/Signup page
 import About from "./pages/About";
-// Import needed React Router components and the custom auth hook
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
-import { useAuth } from "./context/AuthContext"; // Use the custom hook for auth
+
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useAuth } from "./context/AuthContext";
 
 export default function App() {
-  // Use the custom hook to get the user state from AuthContext
-  const { user } = useAuth()
-  // Boolean to quickly check if the user is logged in
-  const isLoggedIn = !!user
+  const { user } = useAuth();
+  const isLoggedIn = !!user;
+
+  // ProtectedRoute wrapper
   const ProtectedRoute = ({ element: Element }) => {
-    return isLoggedIn ? Element : <Navigate to="/login" replace />;
+    return isLoggedIn ? Element : <Navigate to="/auth" replace />;
   };
+
   return (
     <Router>
-      {/* 1. Navbar is only visible if the user is logged in */}
+      {/* Navbar is only visible when logged in */}
       {isLoggedIn && <Navbar />}
+
       <main>
         <Routes>
-          {/* Public Route: Login */}
+          {/* Auth Page (Login + Signup combined) */}
           <Route 
-            path="/login" 
-            // If logged in, redirect away from the login page (e.g., to dashboard)
-            element={isLoggedIn ? <Navigate to="/dashboard" replace /> : <Login />} 
+            path="/auth" 
+            element={isLoggedIn ? <Navigate to="/dashboard" replace /> : <AuthPage />} 
           />
-          {/* Protected Routes (All routes other than login) */}
+
+          {/* Protected Routes */}
           <Route path="/" element={<ProtectedRoute element={<HomePage />} />} />
           <Route path="/projects" element={<ProtectedRoute element={<ProjectPage />} />} />
           <Route path="/new" element={<ProtectedRoute element={<NewProject />} />} />
           <Route path="/settings" element={<ProtectedRoute element={<Settings />} />} />
           <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
-          {/* Catch-all for 404 Not Found (or redirect to a known state) */}
-          <Route path="*" element={<Navigate to={isLoggedIn ? "/dashboard" : "/login"} />} />
+
+          {/* Public route */}
           <Route path="/about" element={<About />} />
+
+          {/* Catch-all redirect */}
+          <Route path="*" element={<Navigate to={isLoggedIn ? "/dashboard" : "/auth"} />} />
         </Routes>
       </main>
-      
-      {/* 2. Floating Settings is only visible if the user is logged in */}
+
+      {/* Floating Settings only visible when logged in */}
       {isLoggedIn && <Settings />}
     </Router>
   );
