@@ -1,5 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
 
+const LOCAL_STORAGE_KEY = "localProjectsData";
+
 const ProjectContext = createContext();
 export { ProjectContext };
 
@@ -7,23 +9,46 @@ export const ProjectProvider = ({ children }) => {
   const [projects, setProjects] = useState([]);
   const API_URL = "https://project-tracker-backend-beta.vercel.app/projects";
 
-  // Load Projects from Backend (Runs ONCE)
+  // Load Projects from Backend and merge with localStorage
   useEffect(() => {
     const fetchProjects = async () => {
       try {
+        // Get backend projects
         const res = await fetch(API_URL);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-        const data = await res.json();
-        setProjects(data);
-        console.log("Projects fetched from backend.");
+        const backendProjects = await res.json();
+        
+        // Get local projects
+        const localProjects = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '[]');
+        
+        // Merge projects (backend + local, avoiding duplicates)
+        const allProjects = [...backendProjects];
+        localProjects.forEach(localProject => {
+          if (!backendProjects.find(p => String(p.id) === String(localProject.id))) {
+            allProjects.push(localProject);
+          }
+        });
+        
+        setProjects(allProjects);
+        console.log("Projects loaded from backend and localStorage.");
       } catch (err) {
-        console.error("Failed to fetch projects:", err);
+        // Fallback to localStorage only
+        const localProjects = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '[]');
+        setProjects(localProjects);
+        console.error("Failed to fetch from backend, using localStorage:", err);
       }
     };
     fetchProjects();
   }, []);
 
-  // Add project to backend and update local state
+  // Save to localStorage whenever projects change
+  useEffect(() => {
+    if (projects.length > 0) {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(projects));
+    }
+  }, [projects]);
+
+  // Add project (try backend, fallback to local)
   const addProject = async (project) => {
     const newProject = {
       id: Date.now(),
@@ -31,6 +56,10 @@ export const ProjectProvider = ({ children }) => {
       progress: Math.min(100, Number(project.progress) || 0),
     };
     
+    // Always add to local state immediately
+    setProjects((prev) => [...prev, newProject]);
+    
+    // Try to sync with backend (but don't fail if it doesn't work)
     try {
       const res = await fetch(API_URL, {
         method: "POST",
@@ -39,37 +68,50 @@ export const ProjectProvider = ({ children }) => {
       });
       
       if (res.ok) {
-        const savedProject = await res.json();
-        setProjects((prev) => [...prev, savedProject]);
-        console.log("Project added to backend.");
+        console.log("Project synced to backend.");
+      } else {
+        console.log("Backend sync failed, project saved locally.");
       }
     } catch (err) {
-      console.error("Failed to add project:", err);
+      console.log("Backend unavailable, project saved locally:", err.message);
     }
   };
 
-  // Delete project from backend and update local state
+  // Delete project (try backend, fallback to local)
   const deleteProject = async (id) => {
+    // Always delete from local state immediately
+    setProjects((prev) => prev.filter((p) => String(p.id) !== String(id)));
+    
+    // Try to sync with backend
     try {
       const res = await fetch(`${API_URL}/${id}`, {
         method: "DELETE",
       });
       
       if (res.ok) {
-        setProjects((prev) => prev.filter((p) => p.id !== id));
         console.log("Project deleted from backend.");
+      } else {
+        console.log("Backend delete failed, project deleted locally.");
       }
     } catch (err) {
-      console.error("Failed to delete project:", err);
+      console.log("Backend unavailable, project deleted locally:", err.message);
     }
   };
 
-  // Update project in backend and update local state
+  // Update project (try backend, fallback to local)
   const updateProject = async (id, updatedProject) => {
     if (updatedProject.progress !== undefined) {
       updatedProject.progress = Math.min(100, Number(updatedProject.progress));
     }
     
+    // Always update local state immediately
+    setProjects((prev) =>
+      prev.map((p) => 
+        String(p.id) === String(id) ? { ...p, ...updatedProject } : p
+      )
+    );
+    
+    // Try to sync with backend
     try {
       const res = await fetch(`${API_URL}/${id}`, {
         method: "PUT",
@@ -78,17 +120,15 @@ export const ProjectProvider = ({ children }) => {
       });
       
       if (res.ok) {
-        const updated = await res.json();
-        setProjects((prev) =>
-          prev.map((p) => (String(p.id) === String(id) ? updated : p))
-        );
         console.log("Project updated in backend.");
-        return true;
+      } else {
+        console.log("Backend update failed, project updated locally.");
       }
     } catch (err) {
-      console.error("Failed to update project:", err);
+      console.log("Backend unavailable, project updated locally:", err.message);
     }
-    return false;
+    
+    return true;
   };
 
   return (

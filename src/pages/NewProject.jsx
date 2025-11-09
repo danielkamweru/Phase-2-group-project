@@ -4,24 +4,29 @@ import { useProjects } from "../context/ProjectContext";
 const NewProject = () => {
   const { addProject } = useProjects(); // Access context
   const [form, setForm] = useState({ name: "", description: "" });
-  // New state to manage success message visibility
   const [showSuccess, setShowSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.name.trim()) return; // Simple validation 
-    // the 'addProject' function in ProjectContext handles id and progress
-    await addProject({
-      ...form,
-    });
-    setForm({ name: "", description: "" }); // Reset form
-    // Show success message
-    setShowSuccess(true);
-    // Hide the success message after 4 seconds
-    setTimeout(() => {
-      setShowSuccess(false);
-    }, 4000);
+    
+    setIsLoading(true);
+    try {
+      await addProject({
+        ...form,
+      });
+      setForm({ name: "", description: "" }); // Reset form
+      setShowSuccess(true);
+      setTimeout(() => {
+        setShowSuccess(false);
+      }, 4000);
+    } catch (err) {
+      console.error("Failed to add project:", err);
+    } finally {
+      setIsLoading(false);
+    }
   };
   const SuccessMessage = () => (
     <div className="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 p-4 rounded-lg shadow-xl bg-green-500 text-white flex items-center space-x-2 transition-opacity duration-300">
@@ -63,10 +68,10 @@ const NewProject = () => {
       {/* Submit Button */}
       <button
         type="submit"
-        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-500 transition-colors"
-        disabled={!form.name.trim()} // Optionally disable if name is empty
+        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-500 transition-colors disabled:opacity-50"
+        disabled={!form.name.trim() || isLoading}
       >
-        Create Project
+        {isLoading ? "Creating Project..." : "Create Project"}
       </button>
     </form>
   );
